@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css" />
+<link href="css/farbtastic.css" rel="stylesheet" type="text/css" />
+<style>
+  .medium-rectangle {
+    width: 298px;
+    height: 248px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+  
+  .wide-skyscraper {
+    width: 158px;
+    height: 598px;
+    border: 1px solid #000;
+    background: #fff;
+  }
+</style>
+</head>
+<body>
+
+<form>
+  <div>
+    <label for="ad-size">Size</label>
+    <select name="ad-size" id="ad-size">
+      <option value="medium-rectangle">300 x 250</option>
+      <option value="wide-skyscraper">160 x 600</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="border-color">Border Color</label>
+    <input name="border-color" id="border-color" class="colorwell" data-target="border-color" value="#000000" />
+  </div>
+  
+  <div>
+    <label for="background-color">Background Color</label>
+    <input name="background-color" id="background-color" class="colorwell" data-target="background-color" value="#000000" />
+  </div>
+  
+  <div id="picker"></div>
+</form>
+
+
+
+<div id="ad" class="medium-rectangle">
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script src="js/farbtastic.js"></script>
+<script>
+$(function(){
+
+  $('#ad-size').change(function(){
+    $('#ad').removeClass().addClass($(this).val());
+  });
+  
+  var f = $.farbtastic('#picker');
+  var selected;
+  $('.colorwell')
+    .each(function () {
+      var _this = $(this);
+      f.linkTo(function(color){
+        _this.val(color);
+        console.log(_this);
+        $('#ad').css(_this.attr('data-target'), color);
+      });
+    })
+    .focus(function() {
+      if (selected) {
+        $(selected).removeClass('colorwell-selected');
+      }
+      var _this = $(this);
+      f.linkTo(function(color){
+        _this.val(color);
+        console.log(_this);
+        $('#ad').css(_this.attr('data-target'), color);
+      });
+      $(selected = this).addClass('colorwell-selected');
+    });
+});
+</script>
+</body>
+</html>
+
